@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lab 06</title>
+    <title>CS105</title>
 
     <style>
         html, body {
@@ -13,59 +13,47 @@
             overflow: hidden;
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
 </head>
 <body>
-<div id="content">
+  <div id="content">
     <div id="webgl"></div>
-</div>
-<script src="three.js"></script>
-<script src="main.js" type="module"></script>
-<div id="score">Press UP</div>
-<div id="controls">
-  <div id="buttons">
-    <button id="accelerate">
-      <svg width="30" height="30" viewBox="0 0 10 10">
-        <g transform="rotate(0, 5,5)">
-          <path d="M5,4 L7,6 L3,6 L5,4" />
-        </g>
-      </svg>
-    </button>
-    <button id="decelerate">
-      <svg width="30" height="30" viewBox="0 0 10 10">
-        <g transform="rotate(180, 5,5)">
-          <path d="M5,4 L7,6 L3,6 L5,4" />
-        </g>
-      </svg>
-    </button>
   </div>
-  <div id="instructions">
-    Press UP to start. Avoid collision with other vehicles by accelerating
-    or decelerating with the UP and DOWN keys.
+  <script src="three.js"></script>
+  <script src="main.js" type="module"></script>
+  <div id="highscore">Highscore: <pan id="highscoreShow">0</pan></div>
+  <div id="score">Press UP</div>
+  <div id="controls">
+    <div id="buttons">
+      <button id="accelerate">
+        <svg width="30" height="30" viewBox="0 0 10 10">
+          <g transform="rotate(0, 5,5)">
+            <path d="M5,4 L7,6 L3,6 L5,4" />
+          </g>
+        </svg>
+      </button>
+      <button id="decelerate">
+        <svg width="30" height="30" viewBox="0 0 10 10">
+          <g transform="rotate(180, 5,5)">
+            <path d="M5,4 L7,6 L3,6 L5,4" />
+          </g>
+        </svg>
+      </button>
+    </div>
+    <div id="instructions">
+      <div>Press UP to start.</div>
+      <div>Avoid other cars!!!</div>
+    </div>
   </div>
-</div>
-
-<div id="results">
-  <div class="content">
-    <h1>You hit another vehicle</h1>
-    <p>To reset the game press R</p>
-
-    <a id="result-youtube" target="_blank" href="https://youtu.be/JhgBwJn1bQw">
-      <div class="youtube"></div>
-      <span>Learn how to build this game with Three.js on YouTube</span>
-    </a>
-
-    <p>
-      Follow me
-      <a href="https://twitter.com/HunorBorbely" , target="_blank">@HunorBorbely</a>
-    </p>
+  
+  <div id="results">
+    <div class="content">
+      <h1 id="gameover">Game Over</h1>
+      <p id="notification">You hit a TRUCK!!!</p>
+      <p id="notification">press R to restart</p>
+      <h1 id="numscoresget">Score: <span id="numscores">0</span></h1>
+    </div>
   </div>
-</div>
-
-<a id="youtube-main" class="youtube" target="_blank" href="https://youtu.be/JhgBwJn1bQw">
-  <span>Learn Three.js</span>
-</a>
-<div id="youtube-card">
-  Learn Three.js while building this game on YouTube
-</div>
 </body>
 </html>

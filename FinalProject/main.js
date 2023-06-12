@@ -100,12 +100,13 @@ const instructionsElement = document.getElementById("instructions");
 const resultsElement = document.getElementById("results");
 const accelerateButton = document.getElementById("accelerate");
 const decelerateButton = document.getElementById("decelerate");
-const youtubeLogo = document.getElementById("youtube-main");
+
+var numscoresElement = document.getElementById("numscores");
+var highscoreShowElement = document.getElementById("highscoreShow")
 
 setTimeout(() => {
   if (ready) instructionsElement.style.opacity = 1;
   buttonsElement.style.opacity = 1;
-  youtubeLogo.style.opacity = 1;
 }, 4000);
 
 // Initialize ThreeJs
@@ -175,8 +176,7 @@ function reset() {
   playerAngleMoved = 0;
   score = 0;
   scoreElement.innerText = "Press UP";
-
-  // Remove other vehicles
+    // Remove other vehicles
   otherVehicles.forEach((vehicle) => {
     // Remove the vehicle from the scene
     scene.remove(vehicle.mesh);
@@ -210,7 +210,6 @@ function startGame() {
     scoreElement.innerText = 0;
     buttonsElement.style.opacity = 1;
     instructionsElement.style.opacity = 0;
-    youtubeLogo.style.opacity = 1;
     renderer.setAnimationLoop(animation);
   }
 }
@@ -894,6 +893,10 @@ function animation(timestamp) {
   if (laps != score) {
     score = laps;
     scoreElement.innerText = score;
+    numscoresElement.innerText = score;
+    if (score > highscoreShowElement.innerText) {
+    highscoreShowElement.innerText = score;
+    }
   }
 
   // Add a new vehicle at the beginning and with every 5th lap
@@ -1082,7 +1085,7 @@ function hitDetection() {
 
   if (hit) {
     if (resultsElement) resultsElement.style.display = "flex";
-    renderer.setAnimationLoop(null); // Stop animation loop
+    renderer.setAnimationLoop(null); // Stop animation loop    
   }
 }
 
