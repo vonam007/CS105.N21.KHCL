@@ -1,22 +1,3 @@
-/*
-
-Three.js video tutorial explaining the source code
-
-Youtube: https://youtu.be/JhgBwJn1bQw
-
-In the tutorial, we go through the source code of this game. We cover, how to set up a Three.js scene with box objects, how to add lights, how to set up the camera, how to add animation and event handlers. We also add textures with HTML Canvas and learn how to draw 2D shapes in Three.js then how to turn them into extruded geometries.
-
-Comparing to the tutorial this version has some extra features:
-- trucks also pop up on the other track
-- the extruded geometry also has a texture
-- there are trees around the track
-- shadows
-- the game reacts to window resizing
-
-Check out my YouTube channel for other game tutorials: https://www.youtube.com/channel/UCxhgW0Q5XLvIoXHAfQXg9oQ
-
-*/
-
 window.focus(); // Capture keys right away (by default focus is on editor)
 
 // Pick a random value from an array
@@ -38,6 +19,9 @@ const vehicleColors = [
   0x0ad3ff,
   0xff9f1c /*0xa52523, 0xbdb638, 0x78b14b*/
 ];
+
+const ScoreSFX = new Audio('scoreSFX.mp3'); //sound when got a score.
+const GameOverSFX = new Audio('gameoverSFX.mp3'); //sound when lose
 
 const lawnGreen = "#67C240";
 const trackColor = "#546E90";
@@ -172,6 +156,9 @@ document.body.appendChild(renderer.domElement);
 reset();
 
 function reset() {
+  //stop music
+  GameOverSFX.pause();
+  GameOverSFX.currentTime = 0;
   // Reset position and score
   playerAngleMoved = 0;
   score = 0;
@@ -891,12 +878,13 @@ function animation(timestamp) {
 
   // Update score if it changed
   if (laps != score) {
+    ScoreSFX.play() //play when got a score
     score = laps;
-    scoreElement.innerText = score;
-    numscoresElement.innerText = score;
+    scoreElement.innerText = score; //show in screen
+    numscoresElement.innerText = score; //show when hit something
     if (score > highscoreShowElement.innerText) {
     highscoreShowElement.innerText = score;
-    }
+    } //highscore
   }
 
   // Add a new vehicle at the beginning and with every 5th lap
@@ -1085,7 +1073,8 @@ function hitDetection() {
 
   if (hit) {
     if (resultsElement) resultsElement.style.display = "flex";
-    renderer.setAnimationLoop(null); // Stop animation loop    
+    renderer.setAnimationLoop(null); // Stop animation loop  
+    GameOverSFX.play();  
   }
 }
 

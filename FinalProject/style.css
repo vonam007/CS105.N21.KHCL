@@ -46,9 +46,8 @@ a:visited {
   font-family: "Press Start 2P", cursive;
   font-size: 2em;
   color: white;
-  transform: translate(-18%, -100%);
+  transform: translate(-22%, -100%);
   opacity: 0.9;
-  text-align: center;
   line-height: 2em;
   padding-bottom: 30px;
 }
@@ -112,8 +111,10 @@ a:visited {
 
 #results .content {
   max-width: 350px;
-  padding: 50px;
+  padding: 110px 100px 50px 100px;
   border-radius: 20px;
+  box-shadow: 0 0 50px #FFFFFF;
+  box-sizing: border-box;
 }
 
 @media (min-height: 425px) {
