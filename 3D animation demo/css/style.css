@@ -11059,7 +11059,7 @@ h5,
 }
 
 #sidebar h1 .logo {
-    color: #9932CC;
+    color: rgb(79 184 233);
 }
 
 #sidebar ul.components {
@@ -11081,7 +11081,7 @@ h5,
 #sidebar ul li a {
     padding: 10px 0;
     display: block;
-    color: #9932CC;
+    color: #35C2DF;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 

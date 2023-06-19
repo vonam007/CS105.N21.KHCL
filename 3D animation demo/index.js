@@ -162,6 +162,12 @@ function control_transform(mesh) {
             case 90: // Z
                 control.showZ = !control.showZ;
                 break;
+            case 76: // L
+                SetPointLight();
+                break;
+            case 32: // spacebar
+                RemoveLight();
+                break;
         }
     });
 }
@@ -200,6 +206,18 @@ function SetPointLight() {
     }
 }
 window.SetPointLight = SetPointLight;
+
+function RemoveLight() {
+
+    scene.remove(light);
+    scene.remove(PointLightHelper);
+    scene.remove(meshplan);
+    if (type_material == 3 || type_material == 4) {
+        SetMaterial(type_material);
+    }
+    render();
+}
+window.RemoveLight = RemoveLight;
 
 function onMouseDown(event) {
     event.preventDefault();
