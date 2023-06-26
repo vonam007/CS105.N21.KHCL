@@ -1,23 +1,28 @@
 import * as THREE from './js/three.module.js';
 import { OrbitControls } from './js/OrbitControls.js';
 import { TransformControls } from './js/TransformControls.js';
+import { TeapotBufferGeometry } from './js/TeapotBufferGeometry.js';
 
 var camera, scene, renderer, control, orbit;
 var mesh, texture;
 var raycaster, light, PointLightHelper, meshplan;
 var type_material = 3;
-var material = new THREE.MeshBasicMaterial({ color: 0x12357A });
+var material = new THREE.MeshBasicMaterial({ color: 0x176B87 });
 material.needsUpdate = true;
 var mouse = new THREE.Vector2();
 
 
-// Create Geometry
+// Geometry
 var BoxGeometry = new THREE.BoxGeometry(30, 30, 30, 40, 40, 40);
 var SphereGeometry = new THREE.SphereGeometry(20, 20, 20);
 var ConeGeometry = new THREE.ConeGeometry(18, 30, 32, 20);
 var CylinderGeometry = new THREE.CylinderGeometry(20, 20, 40, 30, 5);
-
-
+var TorusGeometry = new THREE.TorusGeometry(20, 5, 20, 100);
+var TeapotGeometry = new TeapotBufferGeometry(20, 8);
+var DodecahedronGeometry = new THREE.DodecahedronBufferGeometry(25);
+var IcosahedronGeometry = new THREE.IcosahedronBufferGeometry(25);
+var OctahedronGeometry = new THREE.OctahedronBufferGeometry(25);
+var TetrahedronGeometry = new THREE.TetrahedronBufferGeometry(25);
 
 init();
 render();
@@ -72,7 +77,58 @@ function render() {
     renderer.render(scene, camera);
 }
 
-// 1. Basic 3D model 
+// 1. Basic 3D model with points, line and solid
+function CloneMesh(dummy_mesh) {
+    mesh.name = dummy_mesh.name;
+    mesh.position.set(dummy_mesh.position.x, dummy_mesh.position.y, dummy_mesh.position.z);
+    mesh.rotation.set(dummy_mesh.rotation.x, dummy_mesh.rotation.y, dummy_mesh.rotation.z);
+    mesh.scale.set(dummy_mesh.scale.x, dummy_mesh.scale.y, dummy_mesh.scale.z);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    scene.add(mesh);
+    control_transform(mesh);
+}
+
+function SetMaterial(mat) {
+    mesh = scene.getObjectByName("mesh1");
+    light = scene.getObjectByName("pl1");
+    type_material = mat;
+    if (mesh) {
+        const dummy_mesh = mesh.clone();
+        scene.remove(mesh);
+
+        switch (type_material) {
+            case 1:
+                material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.5 });
+                mesh = new THREE.Points(dummy_mesh.geometry, material);
+                CloneMesh(dummy_mesh);
+                break;
+            case 2:
+                material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
+                mesh = new THREE.Mesh(dummy_mesh.geometry, material);
+                CloneMesh(dummy_mesh);
+                break;
+            case 3:
+                if (!light)
+                    material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+                else
+                    material = new THREE.MeshPhongMaterial({ color: 0xffffff });
+                mesh = new THREE.Mesh(dummy_mesh.geometry, material);
+                CloneMesh(dummy_mesh);
+                break;
+            case 4:
+                if (!light)
+                    material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
+                else
+                    material = new THREE.MeshLambertMaterial({ map: texture, transparent: true });
+                mesh = new THREE.Mesh(dummy_mesh.geometry, material);
+                CloneMesh(dummy_mesh);
+                break;
+        }
+        render();
+    }
+}
+window.SetMaterial = SetMaterial
 
 function RenderGeo(id) {
     mesh = scene.getObjectByName("mesh1");
@@ -91,6 +147,24 @@ function RenderGeo(id) {
         case 4:
             mesh = new THREE.Mesh(CylinderGeometry, material);
             break;
+        case 5:
+            mesh = new THREE.Mesh(TorusGeometry, material);
+            break;
+        case 6:
+            mesh = new THREE.Mesh(TeapotGeometry, material);
+            break;
+        case 7:
+            mesh = new THREE.Mesh(IcosahedronGeometry, material);
+            break;
+        case 8:
+            mesh = new THREE.Mesh(DodecahedronGeometry, material);
+            break;
+        case 9:
+            mesh = new THREE.Mesh(OctahedronGeometry, material);
+            break;
+        case 10:
+            mesh = new THREE.Mesh(TetrahedronGeometry, material);
+            break;
     }
     mesh.name = "mesh1";
     mesh.castShadow = true;
@@ -99,9 +173,9 @@ function RenderGeo(id) {
     control_transform(mesh);
     render();
 }
-window.RenderGeo = RenderGeo; 
+window.RenderGeo = RenderGeo;
 
-// 2. near, far limited of camera
+// 2. near, far
 function setFOV(value) {
     camera.fov = Number(value);
     camera.updateProjectionMatrix();
@@ -190,10 +264,10 @@ function SetPointLight() {
             scene.add(meshplan);
         }
         const color = '#FFFFFF';
-        const intensity = 2;
+        const intensity = 1;
         light = new THREE.PointLight(color, intensity);
         light.castShadow = true;
-        light.position.set(0, 70, 0);
+        light.position.set(0, 70, 30);
         light.name = "pl1";
         scene.add(light);
         control_transform(light);
@@ -246,8 +320,19 @@ function onMouseDown(event) {
     if (check_obj == 0 && control.dragging == 0) control.detach();
     render();
 }
+// 5.Texture 
+function SetTexture(url) {
+    mesh = scene.getObjectByName("mesh1");
+    if (mesh) {
+        texture = new THREE.TextureLoader().load(url, render);
+        texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        SetMaterial(4);
+    }
+}
+window.SetTexture = SetTexture;
 
-// Animation
+
+// 6. Animation
 var mesh = new THREE.Mesh();
 var id_animation1, id_animation2, id_animation3, id_animation4;
 
