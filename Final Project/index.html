@@ -10,21 +10,32 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
     <div id="rendering" class="w-100 h-100 position-fixed">
     </div>
+    <nav id="headbar" class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="logo-container">
+            <a href="index.html" class="logo1">COMPUTER GRAPHICS</a>
+        </div>
+    </nav>
     <div class="wrapper d-flex align-items-stretch">
+        <!-- <nav id="headbar" class="navbar navbar-expand-lg navbar-light bg-light shadow">
+            <div class="logo-container">
+                <a href="index.html" class="logo1">COMPUTER GRAPHIC</a>
+            </div>
+        </nav> -->
         <nav id="sidebar">
             <div class="custom-menu">
                 <button type="button" id="sidebarCollapse" class="btn btn-primary">
-					<i class="fa fa-bars"></i>
+					<i id="menuIcon" class='bx bx-chevron-right'></i>
 					<span class="sr-only">Toggle Menu</span>
 				</button>
             </div>
             <div class="p-4 pt-5">
-                <h1><a href="index.html" class="logo">COMPUTER GRAPHIC</a></h3>
+                <!-- <h1><a href="index.html" class="logo">COMPUTER GRAPHIC</a></h3> -->
                     <ul class="list-unstyled components mb-5">
                         <li>
                             <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">GEOMETRY</a>
@@ -108,6 +119,9 @@
                                     <a href="#" onclick="Animation4()">Rotate & move #2</a>
                                 </li>
                                 <li>
+                                    <a href="#" onclick="Animation5()">Rotate & move #3</a>
+                                </li>
+                                <li>
                                     <a href="#" onclick="ResetAnimation()">Reset</a>
                                 </li>
                             </ul>
@@ -121,9 +135,9 @@
         <div id="content">
             <div class="mt-5">
                 <div class="ml-auto w-25">
-                    <div class="col-1 ">
+                    <div class="col-1 button-container">
                         <button type="button" class="btn btn-light shadow movebutton" onclick="Translate()">
-							<svg class="bi bi-arrows-move" width="1em" height="1em" viewBox="0 0 16 16"
+							<svg class="bi bi-arrows-move" width="1em" height="3em" viewBox="0 0 16 16"
 								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 								<path fill-rule="evenodd"
 									d="M6.5 8a.5.5 0 0 0-.5-.5H1.5a.5.5 0 0 0 0 1H6a.5.5 0 0 0 .5-.5z" />
@@ -138,7 +152,7 @@
 							</svg>
 						</button>
                         <button type="button" class="btn btn-light shadow repeatbutton" onclick="Rotate()">
-							<svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16"
+							<svg class="bi bi-arrow-repeat" width="1em" height="3em" viewBox="0 0 16 16"
 								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 								<path fill-rule="evenodd"
 									d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z" />
@@ -147,7 +161,7 @@
 							</svg>
 						</button>
                         <button type="button" class="btn btn-light shadow" onclick="Scale()">
-							<svg class="bi bi-arrows-fullscreen" width="1em" height="1em" viewBox="0 0 16 16"
+							<svg class="bi bi-arrows-fullscreen" width="1em" height="3em" viewBox="0 0 16 16"
 								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 								<path fill-rule="evenodd"
 									d="M1.464 10.536a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3.5a.5.5 0 0 1-.5-.5v-3.5a.5.5 0 0 1 .5-.5z" />
@@ -185,13 +199,20 @@
 
                         </div>
                     </div>
-
+                    
                 </div>
 
             </div>
         </div>
+        
     </div>
+    <!-- <nav id="bottombar" class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="content-container">
+            <a href="index.html" class="logo1">COMPUTER GRAPHIC</a>
+        </div>
+    </nav> -->
 
+    
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
@@ -254,5 +275,4 @@
         };
     </script>
 </body>
-
 </html>

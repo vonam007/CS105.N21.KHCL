@@ -14,6 +14,32 @@ body {
     z-index: 1;
 }
 
+/* i want to add css to make it center for element named topbar */
+#headbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3.5rem;
+    z-index: 1;
+    justify-content: center;
+    background-color: #151965;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1rem; /* Điều chỉnh chiều cao tùy ý */
+}
+
+.logo1 {
+    /* background-color: rgba(255, 255, 255, 0.5); */
+    left: 50%;
+    font-size: 2rem;
+    text-align: center ;
+    color: #35C2DF;
+}
 .transform {
     position: relative;
     top: 100px;
@@ -23,7 +49,7 @@ body {
 
 .ctrlpannel {
     margin-left: 60px;
-    margin-top: -114px;
+    margin-top: -186px;
 }
 
 :root {
@@ -2723,7 +2749,8 @@ textarea.form-control.is-invalid {
     user-select: none;
     background-color: transparent;
     border: 1px solid transparent;
-    padding: 0.375rem 0.75rem;
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 0.25rem;
     font-size: 1rem;
     line-height: 1.5;
     border-radius: 0.25rem;
@@ -8922,7 +8949,7 @@ button.bg-dark:focus {
 
 .mt-5,
 .my-5 {
-    margin-top: 3rem !important;
+    margin-top: 4rem !important;
 }
 
 .mr-5,
@@ -11033,7 +11060,7 @@ h5,
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: rgba(52, 58, 64, 0.9);
+    background-color: rgba(21, 25, 101, 0.5);
     color: #fff;
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
@@ -11049,8 +11076,17 @@ h5,
     margin-left: -250px;
 }
 
-#sidebar.active .custom-menu {
+/* #sidebar.active .custom-menu {
     margin-right: -50px;
+    margin-top: 60px;
+} */
+.bx-chevron-right {
+    font-size: 1.5rem;
+    transform: translate(-21%, 7%);
+}
+
+#sidebar .p-4 {
+    margin-top: 1rem;
 }
 
 #sidebar h1 {
@@ -11101,17 +11137,17 @@ h5,
     #sidebar.active {
         margin-left: 0;
     }
-    #sidebar .custom-menu {
+    /* #sidebar .custom-menu {
         margin-right: -50px !important;
         top: 10px !important;
-    }
+    } */
 }
 
 #sidebar .custom-menu {
     display: inline-block;
     position: absolute;
-    top: 20px;
-    right: 0;
+    top: 10px;
+    right: -30px;
     margin-right: -20px;
     -webkit-transition: 0.3s;
     -o-transition: 0.3s;

@@ -7,11 +7,11 @@ var camera, scene, renderer, control, orbit;
 var mesh, texture;
 var raycaster, light, PointLightHelper, meshplan;
 var type_material = 3;
-var material = new THREE.MeshBasicMaterial({ color: 0x176B87 });
+var material = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
 material.needsUpdate = true;
 var mouse = new THREE.Vector2();
 
-
+var  count = 0;
 // Geometry
 var BoxGeometry = new THREE.BoxGeometry(30, 30, 30, 40, 40, 40);
 var SphereGeometry = new THREE.SphereGeometry(20, 20, 20);
@@ -30,7 +30,7 @@ render();
 function init() {
     // Scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x343a40);
+    scene.background = new THREE.Color(0x06283D);
 
     // Camera
     var camera_x = 1;
@@ -90,7 +90,8 @@ function CloneMesh(dummy_mesh) {
 }
 
 function SetMaterial(mat) {
-    mesh = scene.getObjectByName("mesh1");
+    for (let i = 1; i <= count; i++) {
+    mesh = scene.getObjectByName("mesh" + i);
     light = scene.getObjectByName("pl1");
     type_material = mat;
     if (mesh) {
@@ -128,11 +129,13 @@ function SetMaterial(mat) {
         render();
     }
 }
+}
 window.SetMaterial = SetMaterial
 
 function RenderGeo(id) {
     mesh = scene.getObjectByName("mesh1");
     scene.remove(mesh);
+    count = 0;
 
     switch (id) {
         case 1:
@@ -170,6 +173,7 @@ function RenderGeo(id) {
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     scene.add(mesh);
+    count = 1;
     control_transform(mesh);
     render();
 }
@@ -334,7 +338,7 @@ window.SetTexture = SetTexture;
 
 // 6. Animation
 var mesh = new THREE.Mesh();
-var id_animation1, id_animation2, id_animation3, id_animation4;
+var id_animation1, id_animation2, id_animation3, id_animation4, id_animation5;
 
 function Animation1() {
     cancelAnimationFrame(id_animation1);
@@ -357,6 +361,8 @@ const position_y = mesh.position.y;
 var kt = 0;
 
 function Animation3() {
+    remove_mesh2();
+    cancelAnimationFrame(id_animation5);
     cancelAnimationFrame(id_animation4);
     cancelAnimationFrame(id_animation3);
     var positionx = mesh.position.x;
@@ -384,8 +390,10 @@ window.Animation3 = Animation3;
 var kt2 = 0;
 
 function Animation4() {
-    cancelAnimationFrame(id_animation3);
+    remove_mesh2();
+    cancelAnimationFrame(id_animation5);
     cancelAnimationFrame(id_animation4);
+    cancelAnimationFrame(id_animation3);
     var positiony = mesh.position.y;
     if (positiony < position_y + 30 && kt2 == 0) {
         mesh.position.y += 0.3;
@@ -402,32 +410,105 @@ function Animation4() {
 }
 window.Animation4 = Animation4;
 
+function remove_mesh2() {
+    if (mesh2) {
+        count = 1;
+        scene.remove(mesh2);
+        mesh2.name = null;
+        //i want to remove mesh2 transform control
+        //control.detach(mesh2);
+    }
+}
+
+var mesh2 = new THREE.Mesh();
+mesh2.name = null;
+
+var angle = 0; // Góc quay
+var radius = 6; // Bán kính
+var speed = 0.01; // Tốc độ quay
+
+function Animation5() {
+    cancelAnimationFrame(id_animation5);
+    cancelAnimationFrame(id_animation4);
+    cancelAnimationFrame(id_animation3);
+    if (mesh2.name == null) {
+        mesh2 = mesh.clone();
+        mesh2.name = "mesh2";
+        mesh2.castShadow = true;
+        mesh2.receiveShadow = true;
+        count = 2; 
+        scene.add(mesh2);
+        //control_transform(mesh2);
+    }
+
+    mesh.position.y = 50;
+    mesh2.position.y = mesh.position.y;
+    mesh2.position.x = mesh.position.x + 50;
+    //rotate mesh2 opposite direction of mesh
+    mesh2.rotation.y = -mesh.rotation.y;
+    // mesh and mesh2 rotate around y-axis
+    mesh.rotation.y += speed;
+    mesh2.rotation.y -= speed;
+
+    var x = radius * (16 * Math.pow(Math.sin(angle), 3));
+    var y = 50+ radius * (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
+  
+    // Thay đổi vị trí mesh0
+    mesh.position.x = x;
+    mesh.position.y = y;
+
+    // Thay đổi vị trí mesh2
+    mesh2.position.x = -x;
+    mesh2.position.y = y;
+
+    // Tăng góc quay
+    angle += speed;
+
+    render();
+    id_animation5 = requestAnimationFrame(Animation5);
+
+}
+window.Animation5 = Animation5;
+
 function RemoveAnimation1() {
     cancelAnimationFrame(id_animation1);
+    remove_mesh2();
 }
 window.RemoveAnimation1 = RemoveAnimation1;
 
 function RemoveAnimation2() {
     cancelAnimationFrame(id_animation2);
+    remove_mesh2();
 }
 window.RemoveAnimation2 = RemoveAnimation2;
 
 function RemoveAnimation3() {
     cancelAnimationFrame(id_animation3);
+    remove_mesh2();
 }
 window.RemoveAnimation3 = RemoveAnimation3;
 
 function RemoveAnimation4() {
     cancelAnimationFrame(id_animation4);
+    remove_mesh2();
 }
 window.RemoveAnimation4 = RemoveAnimation4;
+
+function RemoveAnimation5() {
+    cancelAnimationFrame(id_animation5);
+    remove_mesh2();
+}
+window.RemoveAnimation5 = RemoveAnimation5;
+
 
 function RemoveAllAnimation() {
     cancelAnimationFrame(id_animation1);
     cancelAnimationFrame(id_animation2);
     cancelAnimationFrame(id_animation3);
     cancelAnimationFrame(id_animation4);
+    cancelAnimationFrame(id_animation5);
     mesh.rotation.set(0, 0, 0);
+    remove_mesh2();
     render();
 }
 window.RemoveAllAnimation = RemoveAllAnimation;
